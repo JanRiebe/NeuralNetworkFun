@@ -398,35 +398,3 @@ namespace NeuralNetworkFun
     */
     }
 }
-
-/*
-    Some thoughts, while watching the lectures again:
-
-    Binary model:
-    Each input on a neuron has it's own weight. Then they get summed up and if it's over a threshold, it fires again.
-
-    Analogue model:
-    The threshold gets smothed out, by using a sigmoid funtion that has mathematical convenience.
-    The output still moves between 0 and 1 but there are values between.
-    Each input has it's own weight as well.
-
-    We don't do hillclimbing but take partial derivatives of the performance function, because it is more effective.
-
-    The sum is a dot product of weights and input values (video 2 6:40). What is a dot product?
-
-    For autocoding (making single neurons having meaning and peraps resusing them) we use in training
-    the same value for input as for output.
-    But apparently autocoding might not be better then just convolutional nets. The video was broken here.
-
-
-    Convolution:
-    Used for detecting Images.
-    Looking only at a 10x10 square of pixels.
-    Shifting every time by one pixel or a little bit.
-    Each of those go into a neuron, producing an outcome value.
-    Then results from close image reagions get grouped ond only the maximum value taken.
-    This gets done as well by shifting the square of grouping a bit each time. (Pooling)
-    The procedure gets repeated several times.
-    Not sure whether I understood this corretly.
-
-*/
