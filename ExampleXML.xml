@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <layer>
+    <neuron>
+      <parents>
+        <parent>
+          <index></index>
+          <weight></weight>
+        </parent>
+        <parent>
+          <index></index>
+          <weight></weight>
+        </parent>
+      </parents>
+      <tresholdWeight></tresholdWeight>
+    </neuron>
+
+    <neuron>
+      <parents>
+        <parent>
+          <index></index>
+          <weight></weight>
+        </parent>
+        <parent>
+          <index></index>
+          <weight></weight>
+        </parent>
+      </parents>
+      <tresholdWeight></tresholdWeight>
+    </neuron>
+  </layer>
+
+  <layer>
+    <!-- ... -->
+  </layer>
+  
+</root>
