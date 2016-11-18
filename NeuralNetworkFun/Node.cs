@@ -129,7 +129,7 @@ namespace NeuralNetworkFun
     {
         private double desiredValue;
 
-        public void SetDesiredValue(double value)
+        public void SetValue(double value)
         {
             desiredValue = value;
         }
@@ -161,7 +161,7 @@ namespace NeuralNetworkFun
         Then SetDesiredValue gets called on all trainingDesiredValues.
         After that for each layer children to parents CalculateDelta gets called on all neurons in that layer.
         Finally for each layer parents to children CalculateWeights gets called on all neurons in that layer.
-        Then the step gets repeated as often as defined in the taining data.
+        Then the step gets repeated as often as defined.
         Once the training data has been repeated as defined, new training data gets loaded and the process starts again.
         */
         private static List<List<double>> inputValues;
@@ -179,8 +179,89 @@ namespace NeuralNetworkFun
 
         public static void SetTrainingSet(List<List<double>> inputs, List<List<double>> desired)
         {
+            if (inputValues.Count != trainingDesiredValues.Count)
+            {
+                Console.WriteLine("ERROR in assigning the training set data. The training data contains different amounts of training sets for input then for output.");
+                return;
+            }
             inputValues = inputs;
             trainingDesiredValues = desired;
+        }
+
+        public static void Train(int stepsPerDataSet)
+        {
+            if (inputValues.Count != trainingDesiredValues.Count)
+            {
+                Console.WriteLine("ERROR in training. The training data contains different amounts of training sets for input then for output.");
+                return;
+            }
+
+            int trainingsetIndex = 0;
+            foreach (List<double> inputValueSet in inputValues)
+            {
+                //Setting input values.
+                #region
+                int i = 0;
+                foreach (InputValue node in inputNodes)
+                {
+                    try
+                    {
+                        node.SetValue(inputValueSet[i]);
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        Console.WriteLine("ERROR when loading dataset to inputs. Not enough data to fill all inputs. " + e);
+                    }
+                    i++;
+                }
+                #endregion
+
+                //Setting output values.
+                #region
+                i = 0;
+                foreach (TrainingDesiredValue node in outputNodes)
+                {
+                    try
+                    {
+                        node.SetValue(trainingDesiredValues[trainingsetIndex][i]);
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        Console.WriteLine("ERROR when loading dataset to outputs. Not enough data to fill all outputs. " + e);
+                    }
+                    i++;
+                }
+                #endregion
+
+                for (int j = 0; j < stepsPerDataSet; j++)
+                {
+                    //Calculting Deltas.
+                    #region
+                    for (int layerIndex = neuronLayers.Count - 1; i >= 0; i--)
+                    {
+                        foreach (Neuron neuron in neuronLayers[layerIndex])
+                        {
+                            neuron.CalculateDelta();
+                        }
+                    }
+                    #endregion
+
+                    //Calculting Weights.
+                    #region
+                    for (int layerIndex = 0; i < neuronLayers.Count; i++)
+                    {
+                        foreach (Neuron neuron in neuronLayers[layerIndex])
+                        {
+                            neuron.CalculateWeights();
+                        }
+                    }
+                    #endregion
+                }
+
+                trainingsetIndex++;
+            }
+
+
         }
     }
 

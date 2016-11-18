@@ -33,6 +33,7 @@ namespace NeuralNetworkFun
             //TODO display some information on the nex
             //TODO ask for training or readout
             //TODO loading data
+            //TODO for training ask for how many steps per dataset for training
         }
 
         private static int ChoiceInput(string text, string[] choices, char[] inputs)
